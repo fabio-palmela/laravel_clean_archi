@@ -20,3 +20,4 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::post('/atribuir-limite', [LimiteGlobalController::class, 'atribuirLimite'])->name('atribuirLimite');
+Route::post('/atribuir-limite-xml', [LimiteGlobalController::class, 'atribuirLimiteXml'])->name('atribuirLimiteXml');

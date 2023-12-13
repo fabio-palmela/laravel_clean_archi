@@ -31,6 +31,7 @@ class AtribuirLimiteGlobal
             } else {
                 $novoLimite = $this->gerarNovoLimite($this->limiteGlobalEntity);                
             }
+            
             DB::commit();
             return $novoLimite;
             
