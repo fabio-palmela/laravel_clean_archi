@@ -15,7 +15,6 @@ class EloquentLimiteRepository implements LimiteGlobalRepository
             'limite' => $limite->getLimite(),
         ]);
         $dataLimiteGlobal = LimiteGlobalAdapter::create($novoLimite->first());
-        // return $novoLimite;
         return $dataLimiteGlobal;
     }
 
@@ -28,7 +27,9 @@ class EloquentLimiteRepository implements LimiteGlobalRepository
     public function getLimite($cnpj)
     {
         $limiteModel = LimiteGlobalModel::where('cnpj_empresa', $cnpj);
-        $dataLimiteGlobal = LimiteGlobalAdapter::create($limiteModel->first());
-        return $dataLimiteGlobal;
+        if ($limiteModel->first()){
+            return LimiteGlobalAdapter::create($limiteModel->first());
+        } 
+        return false;
     }
 }
