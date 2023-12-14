@@ -3,6 +3,7 @@ namespace App\Http\Controllers\Api;
 
 use Illuminate\Http\Request;
 use App\Presenters\XmlPresenter;
+use App\Presenters\JsonPresenter;
 use App\Http\Controllers\Controller;
 use App\Infra\Repositories\LaravelTransaction;
 use App\Application\UseCases\AtribuirLimiteGlobal;
@@ -29,9 +30,14 @@ class LimiteGlobalController extends Controller
             $limiteGlobalEntity = new LimiteGlobalEntity($dados);
             $atribuirLimiteGlobal = new AtribuirLimiteGlobal($limiteRepository, $limiteGlobalEntity, $LaravelTransaction);
             $novoLimite = $atribuirLimiteGlobal->atribuirLimitePorEmpresa();
-            return response()->json(['content' => $novoLimite], 200);
+            
+            $jsonData = JsonPresenter::toJson("Novo Limite criado com sucesso.", $novoLimite);
+
+            return response()->json($jsonData, 200);
         } catch (\Throwable $th) {
-            return response()->json(['error' => 'Erro ao atribuir limite. Detalhes: ' . $th->getMessage()], 500);
+            $msgError = 'Erro ao atribuir limite. Detalhes: ' . $th->getMessage();
+            $jsonError = JsonPresenter::toJson($msgError);
+            return response()->json($jsonError, 500);
         }
     }
 
