@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 use Illuminate\Http\Request;
 use App\Presenters\XmlPresenter;
 use App\Http\Controllers\Controller;
+use App\Infra\Repositories\LaravelTransaction;
 use App\Application\UseCases\AtribuirLimiteGlobal;
 use App\Infra\Repositories\EloquentLimiteRepository;
 use App\Domain\Entities\LimiteGlobal as LimiteGlobalEntity;
@@ -23,9 +24,10 @@ class LimiteGlobalController extends Controller
                 'cnpj_empresa' => 'required|string',
                 'limite' => 'required|numeric',
             ]);
+            $LaravelTransaction = new LaravelTransaction();
             $limiteRepository = new EloquentLimiteRepository();
             $limiteGlobalEntity = new LimiteGlobalEntity($dados);
-            $atribuirLimiteGlobal = new AtribuirLimiteGlobal($limiteRepository, $limiteGlobalEntity);
+            $atribuirLimiteGlobal = new AtribuirLimiteGlobal($limiteRepository, $limiteGlobalEntity, $LaravelTransaction);
             $novoLimite = $atribuirLimiteGlobal->atribuirLimitePorEmpresa();
             return response()->json(['content' => $novoLimite], 200);
         } catch (\Throwable $th) {
@@ -40,9 +42,10 @@ class LimiteGlobalController extends Controller
                 'cnpj_empresa' => 'required|string',
                 'limite' => 'required|numeric',
             ]);
+            $LaravelTransaction = new LaravelTransaction();
             $limiteRepository = new EloquentLimiteRepository();
             $limiteGlobalEntity = new LimiteGlobalEntity($dados);
-            $atribuirLimiteGlobal = new AtribuirLimiteGlobal($limiteRepository, $limiteGlobalEntity);
+            $atribuirLimiteGlobal = new AtribuirLimiteGlobal($limiteRepository, $limiteGlobalEntity, $LaravelTransaction);
             $novoLimite = $atribuirLimiteGlobal->atribuirLimitePorEmpresa();
             
             $xmlData = XmlPresenter::toXml(['content' => $novoLimite]);

@@ -1,26 +1,29 @@
 <?php
 namespace App\Application\UseCases;
 
-use Illuminate\Support\Facades\DB;
-use App\Domain\Services\LimiteGlobal;
 use App\Domain\Entities\LimiteGlobalInterface;
 use App\Domain\Repositories\LimiteGlobalRepository;
+use App\Domain\Repositories\DbTransaction;
 
 class AtribuirLimiteGlobal
 {
     private LimiteGlobalRepository $limiteGlobalRepository;
     private LimiteGlobalInterface $limiteGlobalEntity;
+    private DbTransaction $db;
+
     public function __construct(
         LimiteGlobalRepository $limiteGlobalRepository,
-        LimiteGlobalInterface $limiteGlobalEntity
+        LimiteGlobalInterface $limiteGlobalEntity,
+        DbTransaction $dbTransaction
     ){
         $this->limiteGlobalRepository = $limiteGlobalRepository;
         $this->limiteGlobalEntity = $limiteGlobalEntity;
+        $this->db = $dbTransaction;
     }
 
     public function atribuirLimitePorEmpresa()
     {
-        DB::beginTransaction();
+        $this->db->beginTransaction();
         try {
             if ($this->limiteGlobalEntity->existeLimiteDisponivel()){
                 throw new \Exception('Deu ruim. Limite insuficiente.');
@@ -32,11 +35,11 @@ class AtribuirLimiteGlobal
                 $novoLimite = $this->gerarNovoLimite($this->limiteGlobalEntity);                
             }
             
-            DB::commit();
+            $this->db->commit();
             return $novoLimite;
             
         } catch (\Throwable $th) {
-            DB::rollBack();
+            $this->db->rollBack();
             throw $th;
         }
     }
