@@ -1,0 +1,14 @@
+version: '3'
+services:
+  laravel:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    restart: always
+    image: laravel-clean-architecture
+    ports:
+      - 83:80
+    volumes:
+      - ./:/var/www/html
+      
+    
