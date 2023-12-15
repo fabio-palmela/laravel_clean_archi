@@ -1,14 +1,14 @@
 <?php
 namespace App\Infra\Repositories;
 
-use App\Domain\Entities\LimiteGlobal;
+use App\Domain\Entities\LimiteGlobalInterface;
 use App\Domain\Repositories\LimiteGlobalRepository;
 use App\Models\LimiteGlobalModel;
 use App\Infra\Adapters\LimiteGlobalAdapter;
 
 class EloquentLimiteRepository implements LimiteGlobalRepository
 {
-    public function salvar(LimiteGlobal $limite)
+    public function salvar(LimiteGlobalInterface $limite)
     {
         $novoLimite = LimiteGlobalModel::updateOrCreate(['id' => $limite->getId()], [
             'cnpj_empresa' => $limite->getEmpresa(),
