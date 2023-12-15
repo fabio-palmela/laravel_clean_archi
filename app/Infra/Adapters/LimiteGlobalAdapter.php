@@ -1,7 +1,7 @@
 <?php
 namespace App\Infra\Adapters;
 
-use App\Infra\Eloquent\LimiteGlobalModel;
+use App\Models\LimiteGlobalModel;
 
 class LimiteGlobalAdapter
 {
