@@ -185,4 +185,8 @@ return [
         // 'Example' => App\Facades\Example::class,
     ])->toArray(),
 
+    'namespaces' => [
+        'controllers' => 'App\Presentation\Http\Controllers',
+    ],
+
 ];

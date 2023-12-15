@@ -1,5 +1,5 @@
 <?php
-namespace App\Presenters;
+namespace App\Presentation\Presenters;
 
 use stdClass;
 

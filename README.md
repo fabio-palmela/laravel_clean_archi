@@ -7,6 +7,11 @@
 <a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
 </p>
 
+## Instalação/Configuração
+
+```bash
+```
+
 ## Padrões do Clean Architecture (Credicom)
 
 ### Estrutura de Pastas

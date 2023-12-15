@@ -1,10 +1,10 @@
 <?php 
-namespace App\Http\Controllers\Api;
+namespace App\Presentation\Http\Controllers\Api;
 
 use Illuminate\Http\Request;
-use App\Presenters\XmlPresenter;
-use App\Presenters\JsonPresenter;
-use App\Http\Controllers\Controller;
+use App\Presentation\Presenters\XmlPresenter;
+use App\Presentation\Presenters\JsonPresenter;
+use App\Presentation\Http\Controllers\Controller;
 use App\Infra\Repositories\LaravelTransaction;
 use App\Application\UseCases\AtribuirLimiteGlobal;
 use App\Infra\Repositories\EloquentLimiteRepository;
