@@ -1,9 +1,10 @@
 <?php
 namespace App\Application\UseCases;
 
-use App\Domain\Entities\LimiteGlobalInterface;
-use App\Domain\Repositories\LimiteGlobalRepository;
 use App\Domain\Repositories\DbTransaction;
+use App\Domain\Entities\LimiteGlobalInterface;
+use App\Application\Enums\StatusLimiteGlobalEnum;
+use App\Domain\Repositories\LimiteGlobalRepository;
 
 class AtribuirLimiteGlobal
 {
@@ -26,7 +27,8 @@ class AtribuirLimiteGlobal
         $this->db->beginTransaction();
         try {
             if ($this->limiteGlobalEntity->existeLimiteDisponivel()){
-                throw new \Exception('Deu ruim. Limite insuficiente.');
+                $exceptionLimiteReprovado = StatusLimiteGlobalEnum::LIMITE_NAO_PERMITIDO->value;
+                throw new \Exception($exceptionLimiteReprovado);
             }
             $limiteExistente = $this->existeLimiteGlobalGrupoEmpresas($this->limiteGlobalEntity);
             if ($limiteExistente){
