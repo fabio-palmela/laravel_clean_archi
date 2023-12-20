@@ -2,6 +2,7 @@
 namespace App\Presentation\Http\Controllers\Api;
 
 use Illuminate\Http\Request;
+use Symfony\Component\HttpFoundation\Response;
 use App\Presentation\Presenters\XmlPresenter;
 use App\Presentation\Presenters\JsonPresenter;
 use App\Presentation\Http\Controllers\Controller;
@@ -30,14 +31,19 @@ class LimiteGlobalController extends Controller
             $limiteGlobalEntity = new LimiteGlobalEntity($dados);
             $atribuirLimiteGlobal = new AtribuirLimiteGlobal($limiteRepository, $limiteGlobalEntity, $LaravelTransaction);
             $novoLimite = $atribuirLimiteGlobal->atribuirLimitePorEmpresa();
-            
-            $jsonData = JsonPresenter::toJson("Novo Limite criado com sucesso.", $novoLimite);
-
-            return response()->json($jsonData, 200);
+            $data_presenter = [
+                "msg" => "Novo Limite criado com sucesso.", 
+                "content" => $novoLimite,
+                "status" => Response::HTTP_OK
+            ];
+            return JsonPresenter::output($data_presenter);
         } catch (\Throwable $th) {
-            $msgError = 'Erro ao atribuir limite. Detalhes: ' . $th->getMessage();
-            $jsonError = JsonPresenter::toJson($msgError);
-            return response()->json($jsonError, 500);
+            $msgError = [
+                "msg" => "Erro ao atribuir limite. Detalhes: ". $th->getMessage(),
+                "content" => [],
+                "status" => Response::HTTP_INTERNAL_SERVER_ERROR
+            ];
+            return JsonPresenter::output($msgError);
         }
     }
 
@@ -53,13 +59,20 @@ class LimiteGlobalController extends Controller
             $limiteGlobalEntity = new LimiteGlobalEntity($dados);
             $atribuirLimiteGlobal = new AtribuirLimiteGlobal($limiteRepository, $limiteGlobalEntity, $LaravelTransaction);
             $novoLimite = $atribuirLimiteGlobal->atribuirLimitePorEmpresa();
-            
-            $xmlData = XmlPresenter::toXml(['content' => $novoLimite]);
+            $data_presenter = [
+                "msg" => "Novo Limite criado com sucesso.", 
+                "content" => $novoLimite,
+                "status" => Response::HTTP_OK
+            ];
+            return XmlPresenter::output($data_presenter);
 
-            return response($xmlData, 200)
-                ->header('Content-Type', 'application/xml');
         } catch (\Throwable $th) {
-            return response()->json(['error' => 'Erro ao atribuir limite. Detalhes: ' . $th->getMessage()], 500);
+            $msgError = [
+                "msg" => 'Erro ao atribuir limite. Detalhes: ' . $th->getMessage(),
+                "content" => [],
+                "status" => Response::HTTP_INTERNAL_SERVER_ERROR
+            ];
+            return XmlPresenter::output($msgError);
         }
     }
 }

@@ -1,15 +1,18 @@
 <?php
 namespace App\Presentation\Presenters;
 
-use stdClass;
+use Symfony\Component\HttpFoundation\Response;
 
-class JsonPresenter
+class JsonPresenter implements PresenterInterface
 {
-    public static function toJson(string $msg, object $content = new stdClass()): array
+    public static function output($data)
     {
-        return [
-            'message' => $msg,
-            'content' => $content
-        ];
+        $status = isset($data["status"]) ? $data["status"] : 200;
+        $headers = isset($data["headers"]) ? $data["headers"] : [];
+        $options = isset($data["options"]) ? $data["options"] : 0;
+        return response()->json([
+            'message' => $data["msg"],
+            'content' => $data["content"]
+        ], $status, $headers, $options);
     }
 }

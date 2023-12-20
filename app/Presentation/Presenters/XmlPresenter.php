@@ -3,14 +3,21 @@
 namespace App\Presentation\Presenters;
 
 use League\Fractal\TransformerAbstract;
+use App\Presentation\Presenters\PresenterInterface;
 
-class XmlPresenter extends TransformerAbstract
+class XmlPresenter extends TransformerAbstract implements PresenterInterface
 {
     public static function transform($data)
     {
         return [
             'content' => $data,
         ];
+    }
+
+    public static function output($data)
+    {
+        $dataXml = self::toXml($data);
+        return response($dataXml, $data["status"])->header('Content-Type', 'application/xml');
     }
 
     public static function toXml($data)
