@@ -3,7 +3,7 @@ namespace App\Infra\Repositories;
 
 use App\Domain\Entities\LimiteGlobalInterface;
 use App\Domain\Repositories\LimiteGlobalRepository;
-use App\Models\LimiteGlobalModel;
+use App\Infra\Models\LimiteGlobalModel;
 use App\Infra\Adapters\LimiteGlobalAdapter;
 
 class EloquentLimiteRepository implements LimiteGlobalRepository

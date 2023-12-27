@@ -52,10 +52,9 @@ class LimiteGlobalController extends Controller
                 'cnpj_empresa' => 'required|string',
                 'limite' => 'required|numeric',
             ]);
-            $LaravelTransaction = new LaravelTransaction();
             $limiteRepository = new EloquentLimiteRepository();
             $limiteGlobalEntity = new LimiteGlobalEntity($dados);
-            $atribuirLimiteGlobal = new AtribuirLimiteGlobal($limiteRepository, $limiteGlobalEntity, $LaravelTransaction);
+            $atribuirLimiteGlobal = new AtribuirLimiteGlobal($limiteRepository, $limiteGlobalEntity);
             $novoLimite = $atribuirLimiteGlobal->atribuirLimitePorEmpresa();
             $data_presenter = [
                 "msg" => "Novo Limite criado com sucesso.", 

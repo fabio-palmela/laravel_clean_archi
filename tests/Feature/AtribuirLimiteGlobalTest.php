@@ -4,7 +4,6 @@ namespace Tests\Application;
 
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use App\Infra\Repositories\LaravelTransaction;
 use App\Application\Enums\StatusLimiteGlobalEnum;
 use App\Application\UseCases\AtribuirLimiteGlobal;
 use App\Infra\Repositories\EloquentLimiteRepository;
