@@ -64,6 +64,6 @@ class Kernel extends HttpKernel
         'signed' => \App\Presentation\Http\Middleware\ValidateSignature::class,
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
-        'credicom.auth' => \Credicom\Controleacesso\AdLdap\Http\Middleware\Authenticate::class,
+        //'credicom.auth' => \Credicom\Controleacesso\AdLdap\Http\Middleware\Authenticate::class,
     ];
 }

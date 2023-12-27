@@ -168,8 +168,10 @@ return [
         // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
-        Credicom\Controleacesso\AdLdap\Providers\LaravelServiceProvider::class,
+        // Credicom\Controleacesso\AdLdap\Providers\LaravelServiceProvider::class,
         // Credicom\Controleacesso\AdLdap\Providers\AuthServiceProvider::class,
+        // Credicom\Controleacesso\Externo\Providers\LaravelServiceProvider::class,
+        // Credicom\Controleacesso\Externo\Providers\AuthServiceProvider::class,
     ])->toArray(),
 
     /*
