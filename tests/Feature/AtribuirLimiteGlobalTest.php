@@ -21,11 +21,10 @@ class AtribuirLimiteGlobalTest extends TestCase
             'cnpj_empresa' => $cnpj_empresa,
             'limite' =>  $limite
         ];
-        $LaravelTransaction = new LaravelTransaction();
         $limiteRepository = new EloquentLimiteRepository();
         $limiteAtual = $limiteRepository->getLimite($cnpj_empresa);
         $limiteGlobalEntity = new LimiteGlobalEntity($dados);
-        $atribuirLimiteGlobal = new AtribuirLimiteGlobal($limiteRepository, $limiteGlobalEntity, $LaravelTransaction);
+        $atribuirLimiteGlobal = new AtribuirLimiteGlobal($limiteRepository, $limiteGlobalEntity);
         $novoLimite = $atribuirLimiteGlobal->atribuirLimitePorEmpresa();
         $valorLimiteAtual = $limiteAtual ? $limiteAtual->valorLimite : 0;
         $valorNovoLimite = $novoLimite ? $novoLimite->valorLimite : 0;
@@ -43,10 +42,9 @@ class AtribuirLimiteGlobalTest extends TestCase
         ];
         $exceptionLimiteReprovado = StatusLimiteGlobalEnum::LIMITE_NAO_PERMITIDO->value;
         $this->expectExceptionMessage($exceptionLimiteReprovado);
-        $LaravelTransaction = new LaravelTransaction();
         $limiteRepository = new EloquentLimiteRepository();
         $limiteGlobalEntity = new LimiteGlobalEntity($dados);
-        $atribuirLimiteGlobal = new AtribuirLimiteGlobal($limiteRepository, $limiteGlobalEntity, $LaravelTransaction);
+        $atribuirLimiteGlobal = new AtribuirLimiteGlobal($limiteRepository, $limiteGlobalEntity);
         $atribuirLimiteGlobal->atribuirLimitePorEmpresa();
     }
 

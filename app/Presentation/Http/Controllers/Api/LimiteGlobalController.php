@@ -10,27 +10,24 @@ use App\Infra\Repositories\LaravelTransaction;
 use App\Application\UseCases\AtribuirLimiteGlobal;
 use App\Infra\Repositories\EloquentLimiteRepository;
 use App\Domain\Entities\LimiteGlobal as LimiteGlobalEntity;
+use Illuminate\Support\Facades\DB;
 
 class LimiteGlobalController extends Controller
 {
 
-    public function __construct()
-    {
-        
-    }
-
     public function atribuirLimite(Request $request)
     {
+        DB::beginTransaction();
         try {
             $dados = $request->validate([
                 'cnpj_empresa' => 'required|string',
                 'limite' => 'required|numeric',
             ]);
-            $LaravelTransaction = new LaravelTransaction();
             $limiteRepository = new EloquentLimiteRepository();
             $limiteGlobalEntity = new LimiteGlobalEntity($dados);
-            $atribuirLimiteGlobal = new AtribuirLimiteGlobal($limiteRepository, $limiteGlobalEntity, $LaravelTransaction);
+            $atribuirLimiteGlobal = new AtribuirLimiteGlobal($limiteRepository, $limiteGlobalEntity);
             $novoLimite = $atribuirLimiteGlobal->atribuirLimitePorEmpresa();
+            DB::commit();
             $data_presenter = [
                 "msg" => "Novo Limite criado com sucesso.", 
                 "content" => $novoLimite,
@@ -38,6 +35,7 @@ class LimiteGlobalController extends Controller
             ];
             return JsonPresenter::output($data_presenter);
         } catch (\Throwable $th) {
+            DB::rollBack();
             $msgError = [
                 "msg" => "Erro ao atribuir limite. Detalhes: ". $th->getMessage(),
                 "content" => [],
