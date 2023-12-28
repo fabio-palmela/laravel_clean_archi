@@ -10,6 +10,7 @@ class LimiteGlobal implements LimiteGlobalInterface
 
     public function __construct($data)
     {
+        // $data['limite'] = 6;
         $this->cnpjEmpresa = $data['cnpj_empresa'];
         $this->limite = $data['limite'];
     }

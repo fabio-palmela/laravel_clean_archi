@@ -6,7 +6,6 @@ use Symfony\Component\HttpFoundation\Response;
 use App\Presentation\Presenters\XmlPresenter;
 use App\Presentation\Presenters\JsonPresenter;
 use App\Presentation\Http\Controllers\Controller;
-use App\Infra\Repositories\LaravelTransaction;
 use App\Application\UseCases\AtribuirLimiteGlobal;
 use App\Infra\Repositories\EloquentLimiteRepository;
 use App\Domain\Entities\LimiteGlobal as LimiteGlobalEntity;
@@ -23,6 +22,7 @@ class LimiteGlobalController extends Controller
                 'cnpj_empresa' => 'required|string',
                 'limite' => 'required|numeric',
             ]);
+            // $dados['limite'] = 60000;
             $limiteRepository = new EloquentLimiteRepository();
             $limiteGlobalEntity = new LimiteGlobalEntity($dados);
             $atribuirLimiteGlobal = new AtribuirLimiteGlobal($limiteRepository, $limiteGlobalEntity);

@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Application;
+namespace Tests\Feature\Application;
 
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -29,6 +29,8 @@ class AtribuirLimiteGlobalTest extends TestCase
         $valorNovoLimite = $novoLimite ? $novoLimite->valorLimite : 0;
         $msg = "O limite global anterior (R$ {$valorLimiteAtual}) é igual ao novo limite implantado (R$ $valorNovoLimite).";
         $this->assertNotEquals($valorLimiteAtual, $valorNovoLimite, $msg);
+        $msgLimiteCorreto = "O limite global informado foi de $limite e o limite retornado foi de $valorNovoLimite.";
+        $this->assertEquals($limite, $valorNovoLimite, $msgLimiteCorreto);
     }
 
     /**
