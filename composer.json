@@ -16,6 +16,7 @@
         "laravel/framework": "^10.10",
         "laravel/sanctum": "^3.3",
         "laravel/tinker": "^2.8",
+        "league/flysystem-ftp": "^3.0",
         "credicom/controle_acesso": "^2.0"
     },
     "require-dev": {
