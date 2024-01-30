@@ -56,6 +56,25 @@ return [
             'throw' => false,
         ],
 
+        'ftp' => [
+            'driver'   => 'ftp',
+            'host'     => env('FTP_SERVER'),
+            'username' => env('FTP_USER'),
+            'password' => env('FTP_PASSWORD'),
+            'passive' => true,
+            'permPublic' => 7777,
+            'permissions' => [
+                'file' => [
+                    'public' => 7777,
+                    'private' => 7777,
+                ],
+                'dir' => [
+                    'public' => 7777,
+                    'private' => 7777,
+                ],
+            ],
+        ],
+
     ],
 
     /*
